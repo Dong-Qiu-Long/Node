@@ -23,4 +23,4 @@ rs.on('data',(chunk)=>{
 const writeFile = path.resolve(__dirname,'name1.txt')
 async function write(items){
 	await fs.promises.writeFile(writeFile,items,{flag:'a'})
-}
+} 
