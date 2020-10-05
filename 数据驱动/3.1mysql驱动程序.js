@@ -1,4 +1,4 @@
-const mysql = require('mysql2')
+const mysql = require('mysql2/promise')
 //创建一个数据库链接
 // const connection = mysql.createConnection({
 // 	host:'localhost', 
@@ -14,15 +14,47 @@ const mysql = require('mysql2')
 // 		console.log(res)
 // 	}
 // )
-async function test(){
-	const connection = await mysql.createConnection({
+//异步 sql注入
+// async function test(id){
+// 	const connection = await mysql.createConnection({
+// 		host:'localhost',
+// 		user:'root',
+// 		password:'qiulong',
+// 		database:'qiu',
+// 		multipleStatements:true
+// 	});
+// 	console.log(connection)
+// 	const [results] =await connection.query(`select * from class where id = ${id};`)
+// 	connection.end()
+// }
+// test(`9;delete from class where id = 4;`)
+// async function test(id){
+// 	const connection = await mysql.createConnection({
+// 		host:'localhost',
+// 		user:'root',
+// 		password:'qiulong',
+// 		database:'qiu',
+// 		multipleStatements:true
+// 	});
+// 	const sql = `select * from class where id = ?;`
+// 	const [results] =await connection.execute(sql,[id]);
+// 	console.log(results)
+// 	connection.end()
+// }
+// test(2)
+async function test(id){
+	const pool = await mysql.createPool({
 		host:'localhost',
 		user:'root',
 		password:'qiulong',
-		database:'qiu'
+		database:'qiu',
+		multipleStatements:true,
+		waitForConnections:true,
+		connectionLimit:10,
+		queueLimit:0
 	});
-	const [results] = await connection.query('select * from class');
-	console.log(results);
-	connection.end()
+	const sql = `select * from class where id = ?;`
+	const [results] =await pool.execute(sql,[id]);
+	console.log(results)
 }
-test()
+test(2)
