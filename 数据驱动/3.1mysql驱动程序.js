@@ -50,7 +50,7 @@ async function test(id){
 		database:'qiu',
 		multipleStatements:true,
 		waitForConnections:true,
-		connectionLimit:10,
+		connectionLimit:true,
 		queueLimit:0
 	});
 	const sql = `select * from class where id = ?;`
