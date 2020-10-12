@@ -17,6 +17,15 @@ const grades = Mock.mock({
 		'openDate':'@date'
 	}]
 })
+
+const login = Mock.mock({
+	'list|50':[{
+		'loginId':/\d{5,10}/,
+		'loginPwd':/[a-z][A-Z][0-9]{8,16}/,
+		'name':'@cname'
+	}]
+})
 exports.data = data.list
 exports.grades= grades.list
+exports.login = login.list
 
